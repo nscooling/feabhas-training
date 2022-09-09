@@ -1,1 +1,0 @@
-FROM feabhas-target:latest
