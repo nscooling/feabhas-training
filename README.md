@@ -1,33 +1,58 @@
 # Example Feahas Docker Training Project
 
-Download this proof of concept repo.
+**Note**: this Docker based rtraining solution is under development
+and designed as a potentail alternative to Virtual Machines
+normally used for Feabhas embedded C/C++ training courses.
 
-Ensure Docker is running and in  VS Code:
+# Getting Started
 
-   * **Open Folder in container...** top open this folder
-   * if asked select **Dockerfile** from the options
+Ensure Docker is running and then start VS Code and select:
 
-The remote container connect as user `feabhas/ubuntu` in the
-working folder `~/workspace`. There are additional README files
-in this folder for further information (TODO: update target README).
+   * **Open Folder in container...** to open this repo folder
 
-There is a supplied `main.cpp` which is a copy of the one in
-`~/workspace/solutions/01-wms-test` ready to build.
+This will cause Docker to download a container from 
+`martinbond7/feabhas-target:latest` which is configured with a toolchain
+for building Feabhas embedded training projects:
+   * Arm Embedded Toolchain (10.3)
+   * Customised xPack QEMU Washing Machine Simulator (WMS) emulator
 
-Build a project using Ctrl-Shft-B and select **build**.
+Once downloaded VS Code will connect to the remote container as 
+user `feabhas/ubuntu`. The container working folder is set to `~/workspace` and 
+this is mapped onto this repo folder. 
+
+This folder will now contain the files for a standard embedded target 
+for the Feabhas QEMU WMS emulator (copied from a template in the Docker image). 
+
+Unlike the standard VirtualBox container this Docker container does not 
+use the embedded QEMU graphics but opens a diagnostic interface on port 8888. 
+To run the built application the python script `qemu_wms.py` should be started
+in the host (not via VS Code).
+
+There are additional README files in the `workspace` folder which 
+describe how to build and run an embedded project using QEMU WMS and
+the remote Python script.
+
+There is a supplied `src/main.cpp` which is simple for loop
+that is ready to build.
+
+Build the project using Ctrl-Shft-B and select **build**.
 
 Run the script without debugging:
 
-   * in the host launch the `qemu-wms.py` Python script
-   * run the Ctrl-Shft-P test task **Run QEMU**
-   * click on the **Connect** button on the Python GUI
+   * from the **host** launch the `qemu-wms.py` Python script
+   * in VS code press Ctrl-Shft-P and type `test` 
+   * in the popup list select **Tasks: Run Test task**
+   * in the list of tasks select **Run QEMU**
+   * in the Python GUI click on the **Connect** button 
 
 To run with debugging:
 
-   * set a breakpoint (or pause debugging after startup)
+   * set a breakpoint in the code
    * from the **host** launch the `qemu-wms.py` Python script
    * press F5 (or run debug task **QEMU Debug**)
    * within 30 secs click **Connect** on the Python GUI
+
+# Exercises requiring USART3
 
 There are extra tasks and launch scripts to run with USART3 connected to
 the serial port 7777. When using the Python GUI click on the
